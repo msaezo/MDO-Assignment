@@ -68,10 +68,7 @@ MTOW = W_fuel + W_wing + W_AW;
 V_tank = VolumeTank(x)*f_tank;
 V_fuel = W_fuel/rho_fuel;
 
-S = x(4)/2*(x(2)*(x(3)+1)); %Surface area calculation
-
-c1 = -1;
-% c1 = (V_fuel - V_tank)/V_fuel;
+c1 = (V_fuel - V_tank)/V_fuel;
 c2 = (MTOW/S-MTOW_0/S_0)/(MTOW_0/S_0);
 
 c = [c1,c2];
