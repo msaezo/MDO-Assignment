@@ -21,7 +21,7 @@ W_wing = couplings.W_wing;
 W_AW = (29323-4280)*9.81;
 MTOW = W_fuel + W_wing + W_AW;
 
-V_tank = VolumeTank(x)*f_tank
+V_tank = VolumeTank(x)*f_tank;
 V_fuel = W_fuel/rho_fuel;
 
 S = x(4)/2*(x(2)*(x(3)+1)); %Surface area calculation
