@@ -2,7 +2,11 @@ function[V_tank_tot] = VolumeTank(x)
 %This function calculates the volume available for the fuel in the wing. It
 %bases the calculation on volume integrals over the surface area of the
 %airfoil available for the tank.
-    
+    global couplings;
+    X0 = couplings.X0;
+    W_wing_i = couplings.W_wing_c;
+    W_fuel_i = couplings.W_fuel_c;
+    x = x.*X0;
     sweep = x(1);
     b = x(2);
     lambda_in = x(3);
