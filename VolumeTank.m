@@ -4,8 +4,6 @@ function[V_tank_tot] = VolumeTank(x)
 %airfoil available for the tank.
     global couplings;
     X0 = couplings.X0;
-    W_wing_i = couplings.W_wing_c;
-    W_fuel_i = couplings.W_fuel_c;
     x = x.*X0;
     sweep = x(1);
     b = x(2);
