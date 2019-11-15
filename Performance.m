@@ -1,4 +1,4 @@
-function [W_fuel_new] = Performance(W_fuel,W_wing,CL_w,CD_w)
+function [W_fuel_new] = Performance(W_fuel,W_wing_c,CL_w,CD_w)
 %matlab function for MDO assignment Performance
 %Design variables: -
 %%local design variable: x1
@@ -13,7 +13,7 @@ CD_AW = 0.0093; %Value for aircraft minus wing CD
 
 CD_CL = (CD_w+CD_AW)/CL_w;
 Wst_end = exp(R*Ct/V*(CD_CL));
-MTOW = W_AW + W_wing +W_fuel;
+MTOW = W_AW + W_wing_c +W_fuel;
 W_fuel_new = (1-0.938*(1/Wst_end))*MTOW;
 
 

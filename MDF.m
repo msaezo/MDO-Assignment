@@ -15,7 +15,7 @@ epsilon_in = 1;
 epsilon_out = 1;
 CST = [0.2337, 0.0796, 0.2683, 0.0887, 0.2789, 0.3811, -0.2254, -0.1634, -0.0470, -0.4771, 0.0735, 0.3255, 0.1385, 0.0472, 0.1590, 0.0526, 0.1653, 0.2258, -0.1336, -0.0968, -0.0279, -0.2827, 0.0435, 0.1929];
 X0 = [sweep, b, lambda_in, lambda_out, root, epsilon_in, epsilon_out, CST];
-x0  = X0./X0; 
+x0  = X0./abs(X0); 
 
 %%only for plot
 Au_root = [X0(8),X0(9),X0(10),X0(11),X0(12),X0(13)];
@@ -34,17 +34,18 @@ airfoil.X0tl_tip = X0tl_tip;
 
 %bounds
 
-lb = [20,24.08,0.4,0.35,4.4,-4,-4,CST(1)-0.02,CST(2)-0.02,CST(3)-0.02,CST(4)-0.02,...
-    CST(5)-0.02,CST(6)-0.02,CST(7)-0.02,CST(8)-0.02,CST(9)-0.02,CST(10)-0.02,CST(11)-0.02...
-    ,CST(12)-0.02,CST(13)-0.02,CST(14)-0.02,CST(15)-0.02,CST(16)-0.02,...
-    CST(17)-0.02,CST(18)-0.02,CST(19)-0.02,CST(20)-0.02,CST(21)-0.02,CST(22)-0.02,CST(23)-0.02...
-    ,CST(24)-0.02]./X0;
-ub = [30,35.08,0.8,0.8,6.4,4,4,CST(1)+0.02,CST(2)+0.02,CST(3)+0.02,CST(4)+0.02,...
-    CST(5)+0.02,CST(6)+0.02,CST(7)+0.02,CST(8)+0.02,CST(9)+0.02,CST(10)+0.02,CST(11)+0.02...
-    ,CST(12)+0.02,CST(13)+0.02,CST(14)+0.02,CST(15)+0.02,CST(16)+0.02,...
-    CST(17)+0.02,CST(18)+0.02,CST(19)+0.02,CST(20)+0.02,CST(21)+0.02,CST(22)+0.02,CST(23)+0.02...
-    ,CST(24)+0.02]./X0;
-
+lb = [20,24.08,0.4,0.35,4.4,-4,-4,CST(1),CST(2),CST(3),CST(4),...
+    CST(5),CST(6),CST(7),CST(8),CST(9),CST(10),CST(11)...
+    ,CST(12),CST(13),CST(14),CST(15),CST(16),...
+    CST(17),CST(18),CST(19),CST(20),CST(21),CST(22),CST(23)...
+    ,CST(24)]./abs(X0);
+lb = lb+[0,0,0,0,0,0,0,-0.2,-0.2,-0.2,-0.2,-0.2,-0.2,-0.2,-0.2,-0.2,-0.2,-0.2,-0.2,-0.2,-0.2,-0.2,-0.2,-0.2,-0.2,-0.2,-0.2,-0.2,-0.2,-0.2,-0.2];
+ub = [30,35.08,0.8,0.8,6.4,4,4,CST(1),CST(2),CST(3),CST(4),...
+    CST(5),CST(6),CST(7),CST(8),CST(9),CST(10),CST(11)...
+    ,CST(12),CST(13),CST(14),CST(15),CST(16),...
+    CST(17),CST(18),CST(19),CST(20),CST(21),CST(22),CST(23)...
+    ,CST(24)]./abs(X0);
+ub = ub+[0,0,0,0,0,0,0,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2];
 global couplings;
 couplings.X0 = X0;
 couplings.W_wing_c = 4280*9.81;
@@ -57,13 +58,13 @@ options.DiffMinChange   = 1e-6;         % Minimum change while gradient searchin
 options.DiffMaxChange   = 1e-3;         % Maximum change while gradient searching
 options.TolCon          = 1e-6;         % Maximum difference between two subsequent constraint vectors [c and ceq]
 options.TolFun          = 1e-6;         % Maximum difference between two subsequent objective value
-options.TolX            = 1e-6;         % Maximum difference between two subsequent design vectors
-
+options.TolX            = 1e-5;         % Maximum difference between two subsequent design vectors
+options.PlotFcns        = {@optimplotx,@optimplotfunccount,@optimplotfval,@optimplotconstrviolation,@optimplotstepsize,@optimplotfirstorderopt}
 options.MaxIter         = 30;           % Maximum iterations
 
 
 tic;
-[x,FVAL,EXITFLAG,OUTPUT] = fmincon(@(x) Optim_MDFGauss(x),x0,[],[],[],[],lb,ub,@(x) constraints(x),options);
+[x,FVAL,EXITFLAG,OUTPUT] = fmincon(@(x) Optim_MDFGauss(x),x0,[],[],[],[],lb,ub,@(x) constraints(x),options)
 toc;
 load handel
 sound(y,Fs)

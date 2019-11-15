@@ -11,14 +11,31 @@ W_wing = W_wing_c;
 W_fuel = W_fuel_c;
 counter = 0;
 n=1;
+
+
+sweep
+b
+lambda_in
+lambda_out
+root
+epsilon_in
+epsilon_out
+CST
+W_wing_c
+W_fuel_c
+
+
+
 while (counter == 0 || (abs(W_fuel-W_fuel_c)/W_fuel>error_n))
     %loop counter
-    if (counter > 15)
-        W_fuel_c = (W_fuel+W_fuel_c)/2;      
+    if (counter > 5)
+        W_fuel_c = (W_fuel+W_fuel_c)/2; 
+        W_wing_c = (W_wing+W_wing_c)/2; 
         break
     end
     if (counter > 0)
         W_fuel = W_fuel_c;
+        W_wing = W_wing_c;
     end
     
     Loads(sweep,b,lambda_in,lambda_out,root,epsilon_in,epsilon_out,CST,W_fuel,W_wing);
@@ -34,31 +51,30 @@ while (counter == 0 || (abs(W_fuel-W_fuel_c)/W_fuel>error_n))
     your_text = char(your_text);
     A = your_text(23:end);
     
-    W_wing = str2num(A)*9.81
+    W_wing_c = str2num(A)*9.81
     fclose(fid);
     
-    if isnan(W_wing) == 1
-        %say that the wing is very bad so fmincon will look away from this
-        %point
-        W_wing = 10000*9.81;
-        W_fuel_c = 10000*9.81;
+    if isnan(W_wing_c) == 1
         break
     end
     
-    [CL_w,CD_w] = Aerodynamics(sweep,b,lambda_in,lambda_out,root,epsilon_in,epsilon_out,CST,W_fuel,W_wing);
-    W_fuel_c = Performance(W_fuel,W_wing,CL_w,CD_w);
+    [CL_w,CD_w] = Aerodynamics(sweep,b,lambda_in,lambda_out,root,epsilon_in,epsilon_out,CST,W_fuel,W_wing_c);
+    W_fuel_c = Performance(W_fuel,W_wing_c,CL_w,CD_w);
     n = n + 1;
     
     counter = counter +1;   
 
 end
-
 global couplings;
-couplings.W_fuel = W_fuel_c;
-couplings.W_wing = W_wing;
-
-% planform(sweep,b,lambda_in,lambda_out, root, 1)
-Res = [W_fuel_c,W_wing,counter];
+if isnan(W_wing_c) == 1
+    couplings.W_fuel = W_fuel;
+    couplings.W_wing = W_wing;
+    Res = [W_fuel,W_wing,counter];
+else
+    couplings.W_fuel = W_fuel_c;
+    couplings.W_wing = W_wing_c;
+    Res = [W_fuel_c,W_wing_c,counter];
+end
 
 end
 

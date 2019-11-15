@@ -10,7 +10,7 @@ f_tank = 0.93; %Usable space
 
 %Variables initial vector
 S_0 = 93.5;
-MTOW_0 = (29323+5000)*9.81;
+MTOW_0 = (29323+6000)*9.81;
 
 % Wing planform geometry
 global couplings;
@@ -65,8 +65,9 @@ MTOW = W_fuel + W_wing + W_AW;
 V_tank = VolumeTank(x)*f_tank;
 V_fuel = W_fuel/rho_fuel;
 
-c1 = (V_fuel - V_tank)/V_fuel;
-c2 = (MTOW/S-MTOW_0/S_0)/(MTOW_0/S_0);
+
+c1 = V_fuel/V_tank-1;
+c2 = (MTOW/S)/(MTOW_0/S_0)-1;
 
 c = [c1,c2];
 ceq = [];

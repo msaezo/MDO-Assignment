@@ -2,30 +2,28 @@ function[V_tank_tot] = VolumeTank(x)
 %This function calculates the volume available for the fuel in the wing. It
 %bases the calculation on volume integrals over the surface area of the
 %airfoil available for the tank.
-    global couplings;
-    X0 = couplings.X0;
-    x = x.*X0;
-    sweep = x(1);
+       sweep = x(1);
     b = x(2);
     lambda_in = x(3);
     lambda_out = x(4);
-    root = x(4);
-    epsilon_in = x(5);
-    epsilon_out = x(6);
+    root = x(5);
+    epsilon_in = x(6);
+    epsilon_out = x(7);
     
-    CST = [x(7),x(8),x(9),x(10),x(11),x(12),x(13),x(14),x(15),...
+    CST = [x(8),x(9),x(10),x(11),x(12),x(13),x(14),x(15),...
         x(16),x(17),x(18),x(19),x(20),x(21),x(22),x(23),x(24),x(25),...
-        x(26),x(27),x(28),x(29),x(30)];
+        x(26),x(27),x(28),x(29),x(30),x(31)];
+    Au_root = [x(8),x(9),x(10),x(11),x(12),x(13)];
+    Al_root = [x(14),x(15),x(16),x(17),x(18),x(19)];
     
-    %With the coefficients calculates the airfoil points
-    Au_root = [x(7),x(8),x(9),x(10),x(11),x(12)];
-    Al_root = [x(13),x(14),x(15),x(16),x(17),x(18)];
-    
-    Au_tip = [x(19),x(20),x(21),x(22),x(23),x(24)];
-    Al_tip = [x(25),x(26),x(27),x(28),x(29),x(30)];
+    Au_tip = [x(20),x(21),x(22),x(23),x(24),x(25)];
+    Al_tip = [x(26),x(27),x(28),x(29),x(30),x(31)];
     
     [Xtu_root,Xtl_root] = D_airfoil2(Au_root,Al_root);
     [Xtu_tip,Xtl_tip] = D_airfoil2(Au_tip,Al_tip);
+    
+    Xtu_root = Xtu_root.*root;
+    Xtl_root = Xtl_root.*root;
     
     %Set parameters of tank position (chordwise)
     tank_chord_front = 0.15;
@@ -43,10 +41,10 @@ function[V_tank_tot] = VolumeTank(x)
     slope_tc = ratio_tc_root_tip - 1;
     
     %Calculate the height of the root airfoil at the span locations
-    spar_front_upp_height = interp1(Xtu_root(:,1),Xtu_root(:,2),tank_chord_front);
-    spar_back_upp_height = interp1(Xtu_root(:,1),Xtu_root(:,2),tank_chord_back);
-    spar_front_low_height = interp1(Xtl_root(:,1),Xtl_root(:,2),tank_chord_front);
-    spar_back_low_height = interp1(Xtl_root(:,1),Xtl_root(:,2),tank_chord_back);
+    spar_front_upp_height = interp1(Xtu_root(:,1),Xtu_root(:,2),tank_chord_front*root);
+    spar_back_upp_height = interp1(Xtu_root(:,1),Xtu_root(:,2),tank_chord_back*root);
+    spar_front_low_height = interp1(Xtl_root(:,1),Xtl_root(:,2),tank_chord_front*root);
+    spar_back_low_height = interp1(Xtl_root(:,1),Xtl_root(:,2),tank_chord_back*root);
     spar_front_height = (spar_front_upp_height - spar_front_low_height)*root;
     spar_back_height = (spar_back_upp_height - spar_back_low_height)*root;
     
@@ -57,7 +55,7 @@ function[V_tank_tot] = VolumeTank(x)
     
     for b_sec = 0:step_size:b*tank_loc_out
         
-        if b_sec <= b*0.4
+        if b_sec <= 5.37
             %Per airfoil section calculate the chord
             delta_chord = ((root*lambda_in)-(root))/(b*tank_loc_in);
             chord_sec(n) = root + delta_chord*b_sec;

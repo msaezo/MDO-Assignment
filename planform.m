@@ -49,13 +49,13 @@ if Plotting == 1
     plot([AC.Wing.Geom(1,1)+AC.Wing.Geom(1,4) AC.Wing.Geom(2,1)+AC.Wing.Geom(2,4)], [AC.Wing.Geom(1,2) AC.Wing.Geom(2,2)])
     plot([AC.Wing.Geom(2,1)+AC.Wing.Geom(2,4) AC.Wing.Geom(3,1)+AC.Wing.Geom(3,4)], [AC.Wing.Geom(2,2) AC.Wing.Geom(3,2)])
 
-    plot([AC.Wing.Geom(1,1) AC.Wing.Geom(1,4)], -[AC.Wing.Geom(1,2) AC.Wing.Geom(1,2)])
-    plot([AC.Wing.Geom(2,1) AC.Wing.Geom(2,1)+AC.Wing.Geom(2,4)], -[AC.Wing.Geom(2,2) AC.Wing.Geom(2,2)])
-    plot([AC.Wing.Geom(3,1) AC.Wing.Geom(3,1)+AC.Wing.Geom(3,4)], -[AC.Wing.Geom(3,2) AC.Wing.Geom(3,2)])
-    plot([AC.Wing.Geom(1,1) AC.Wing.Geom(2,1)], -[AC.Wing.Geom(1,2) AC.Wing.Geom(2,2)])
-    plot([AC.Wing.Geom(2,1) AC.Wing.Geom(3,1)], -[AC.Wing.Geom(2,2) AC.Wing.Geom(3,2)])
-    plot([AC.Wing.Geom(1,1)+AC.Wing.Geom(1,4) AC.Wing.Geom(2,1)+AC.Wing.Geom(2,4)], -[AC.Wing.Geom(1,2) AC.Wing.Geom(2,2)])
-    plot([AC.Wing.Geom(2,1)+AC.Wing.Geom(2,4) AC.Wing.Geom(3,1)+AC.Wing.Geom(3,4)], -[AC.Wing.Geom(2,2) AC.Wing.Geom(3,2)])
+%     plot([AC.Wing.Geom(1,1) AC.Wing.Geom(1,4)], -[AC.Wing.Geom(1,2) AC.Wing.Geom(1,2)])
+%     plot([AC.Wing.Geom(2,1) AC.Wing.Geom(2,1)+AC.Wing.Geom(2,4)], -[AC.Wing.Geom(2,2) AC.Wing.Geom(2,2)])
+%     plot([AC.Wing.Geom(3,1) AC.Wing.Geom(3,1)+AC.Wing.Geom(3,4)], -[AC.Wing.Geom(3,2) AC.Wing.Geom(3,2)])
+%     plot([AC.Wing.Geom(1,1) AC.Wing.Geom(2,1)], -[AC.Wing.Geom(1,2) AC.Wing.Geom(2,2)])
+%     plot([AC.Wing.Geom(2,1) AC.Wing.Geom(3,1)], -[AC.Wing.Geom(2,2) AC.Wing.Geom(3,2)])
+%     plot([AC.Wing.Geom(1,1)+AC.Wing.Geom(1,4) AC.Wing.Geom(2,1)+AC.Wing.Geom(2,4)], -[AC.Wing.Geom(1,2) AC.Wing.Geom(2,2)])
+%     plot([AC.Wing.Geom(2,1)+AC.Wing.Geom(2,4) AC.Wing.Geom(3,1)+AC.Wing.Geom(3,4)], -[AC.Wing.Geom(2,2) AC.Wing.Geom(3,2)])
     hold off
 else
 end

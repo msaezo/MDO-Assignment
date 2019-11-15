@@ -3,7 +3,7 @@ function [f,vararg] = Optim_MDFGauss(x)
     X0 = couplings.X0;
     W_wing_i = couplings.W_wing_c;
     W_fuel_i = couplings.W_fuel_c;
-    x = x.*X0;
+    x = x.*abs(X0);
     sweep = x(1);
     b = x(2);
     lambda_in = x(3);
@@ -49,58 +49,58 @@ function [f,vararg] = Optim_MDFGauss(x)
     end
     fclose(fid);
     
-    global airfoil;
-    
-    subplot(3,2,1);
-    xlim([0 1])
-    ylim([-0.5 0.5])
-    plot(Xtu_tip(:,1),Xtu_tip(:,2))
-    hold on    
-    xlim([0 1])
-    ylim([-0.5 0.5])
-    plot(Xtl_tip(:,1),Xtl_tip(:,2))
-    title(' NEW Tip')
-    hold off
-    
-    subplot(3,2,2);
-    xlim([0 1])
-    ylim([-0.5 0.5])
-    plot(airfoil.X0tu_tip(:,1),airfoil.X0tu_tip(:,2))
-    hold on     
-    xlim([0 1])
-    ylim([-0.5 0.5])
-    plot(airfoil.X0tl_tip(:,1),airfoil.X0tl_tip(:,2))
-    title('INITIAL Tip')
-    hold off
-    subplot(3,2,3);
-    xlim([0 1])
-    ylim([-0.5 0.5])
-    plot(Xtu_root(:,1),Xtu_root(:,2))
-    hold on
-    xlim([0 1])
-    ylim([-0.5 0.5])
-    plot(Xtl_root(:,1),Xtl_root(:,2))
-    title('NEW root')
-    hold off
-    
-    subplot(3,2,4);
-    xlim([0 1])
-    ylim([-0.5 0.5])
-    plot(airfoil.X0tu_root(:,1),airfoil.X0tu_root(:,2))
-    hold on    
-    xlim([0 1])
-    ylim([-0.5 0.5])
-    plot(airfoil.X0tl_root(:,1),airfoil.X0tl_root(:,2))
-    title('INITIAL root')
-    hold off
-   
-    subplot(3,2,5);
-    planform(sweep,b,lambda_in,lambda_out, root, 1)
-    title('NEW planform')
-    
-    subplot(3,2,6);
-    planform(24,28.08,0.6,0.4,5.8, 1)
-    title('INITIAL planform')
+%     global airfoil;
+%     
+%     subplot(3,2,1);
+%     xlim([0 1])
+%     ylim([-0.5 0.5])
+%     plot(Xtu_tip(:,1),Xtu_tip(:,2))
+%     hold on    
+%     xlim([0 1])
+%     ylim([-0.5 0.5])
+%     plot(Xtl_tip(:,1),Xtl_tip(:,2))
+%     title(' NEW Tip')
+%     hold off
+%     
+%     subplot(3,2,2);
+%     xlim([0 1])
+%     ylim([-0.5 0.5])
+%     plot(airfoil.X0tu_tip(:,1),airfoil.X0tu_tip(:,2))
+%     hold on     
+%     xlim([0 1])
+%     ylim([-0.5 0.5])
+%     plot(airfoil.X0tl_tip(:,1),airfoil.X0tl_tip(:,2))
+%     title('INITIAL Tip')
+%     hold off
+%     subplot(3,2,3);
+%     xlim([0 1])
+%     ylim([-0.5 0.5])
+%     plot(Xtu_root(:,1),Xtu_root(:,2))
+%     hold on
+%     xlim([0 1])
+%     ylim([-0.5 0.5])
+%     plot(Xtl_root(:,1),Xtl_root(:,2))
+%     title('NEW root')
+%     hold off
+%     
+%     subplot(3,2,4);
+%     xlim([0 1])
+%     ylim([-0.5 0.5])
+%     plot(airfoil.X0tu_root(:,1),airfoil.X0tu_root(:,2))
+%     hold on    
+%     xlim([0 1])
+%     ylim([-0.5 0.5])
+%     plot(airfoil.X0tl_root(:,1),airfoil.X0tl_root(:,2))
+%     title('INITIAL root')
+%     hold off
+%    
+%     subplot(3,2,5);
+%     planform(sweep,b,lambda_in,lambda_out, root, 1)
+%     title('NEW planform')
+%     
+%     subplot(3,2,6);
+%     planform(24,28.08,0.6,0.4,5.8, 1)
+%     title('INITIAL planform')
  
     %Initial guess for output of discipline 2
     error_n = 10^(-2);
@@ -112,7 +112,5 @@ function [f,vararg] = Optim_MDFGauss(x)
     counter= Res(3);
     
     f = Objective(W_fuel,W_wing);
-
     vararg = {W_fuel,W_wing,counter};
- 
 end

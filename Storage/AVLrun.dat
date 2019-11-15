@@ -5,7 +5,7 @@ mn 0.74
 v 228.202
 d 0.42262
 
-a c 0.30496
+a c 0.304802
 x
 st AVLaero.dat
 vm AVLload.dat

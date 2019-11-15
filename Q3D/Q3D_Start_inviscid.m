@@ -1,4 +1,4 @@
-function[Res,q,MAC]=Q3D_Start_inviscid(sweep,b,lambda_in,lambda_out, root, epsilon_in,epsilon_out, CST, W_fuel,W_wing, Plotting)
+function[Res,q,MAC]=Q3D_Start_inviscid(sweep,b,lambda_in,lambda_out, root, epsilon_in,epsilon_out, CST, W_fuel,W_wing_c, Plotting)
 %% Aerodynamic solver setting for inviscid calculation
 
 % Wing planform geometry
@@ -53,7 +53,7 @@ AC.Aero.MaxIterIndex = 150;    %Maximum number of Iteration for the
                                 
 % Aircraft Design Parameters
 W_AW = (29323-4280)*9.81; 
-MTOW = W_fuel + W_wing + W_AW;
+MTOW = W_fuel + W_wing_c + W_AW;
                                 
 % Flight Condition
 AC.Aero.rho   = 0.52981;                          % air density  (kg/m3)
