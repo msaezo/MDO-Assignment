@@ -15,9 +15,9 @@ MTOW_0 = (29323+5000)*9.81;
 % Wing planform geometry
 global couplings;
 X0 = couplings.X0;
-
 W_fuel = couplings.W_fuel;
 W_wing = couplings.W_wing;
+
 x = x.*X0;
 sweep = x(1);
 b = x(2);
@@ -57,6 +57,7 @@ AC.Wing.Geom(3,5) = epsilon_out;
 S_in = (AC.Wing.Geom(1,4)+AC.Wing.Geom(2,4))*AC.Wing.Geom(2,2)*0.5;                      %inboard surface
 S_out = (AC.Wing.Geom(3,4)+AC.Wing.Geom(2,4))*(AC.Wing.Geom(3,2)-AC.Wing.Geom(2,2))*0.5;  %inboard surface
 S = 2*(S_in+S_out);                     %total surfaceMAC
+
 
 W_AW = (29323-4280)*9.81;
 MTOW = W_fuel + W_wing + W_AW;
