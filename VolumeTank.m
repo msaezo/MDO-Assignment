@@ -1,41 +1,41 @@
-function[V_tank_tot] = VolumeTank()
+function[V_tank_tot] = VolumeTank(x)
 %This function calculates the volume available for the fuel in the wing. It
 %bases the calculation on volume integrals over the surface area of the
 %airfoil available for the tank.
     
-sweep = 24;
-b = 28.08;
-lambda_in = 0.6;
-lambda_out = 0.4;
-root = 5.8;
-epsilon_in = 1;
-epsilon_out = 1;
-CST = [0.2337, 0.0796, 0.2683, 0.0887, 0.2789, 0.3811, -0.2254, -0.1634, -0.0470, -0.4771, 0.0735, 0.3255, 0.1385, 0.0472, 0.1590, 0.0526, 0.1653, 0.2258, -0.1336, -0.0968, -0.0279, -0.2827, 0.0435, 0.1929];
-X0 = [sweep, b, lambda_in, lambda_out, root, epsilon_in, epsilon_out, CST];
-x0  = X0./abs(X0); 
-
-%%only for plot
-Au_root = [X0(8),X0(9),X0(10),X0(11),X0(12),X0(13)];
-Al_root = [X0(14),X0(15),X0(16),X0(17),X0(18),X0(19)];
-
-Au_tip = [X0(20),X0(21),X0(22),X0(23),X0(24),X0(25)];
-Al_tip = [X0(26),X0(27),X0(28),X0(29),X0(30),X0(31)];
-%     sweep = x(1);
-%     b = x(2);
-%     lambda_in = x(3);
-%     lambda_out = x(4);
-%     root = x(5);
-%     epsilon_in = x(6);
-%     epsilon_out = x(7);
-%     
-%     CST = [x(8),x(9),x(10),x(11),x(12),x(13),x(14),x(15),...
-%         x(16),x(17),x(18),x(19),x(20),x(21),x(22),x(23),x(24),x(25),...
-%         x(26),x(27),x(28),x(29),x(30),x(31)];
-%     Au_root = [x(8),x(9),x(10),x(11),x(12),x(13)];
-%     Al_root = [x(14),x(15),x(16),x(17),x(18),x(19)];
-%     
-%     Au_tip = [x(20),x(21),x(22),x(23),x(24),x(25)];
-%     Al_tip = [x(26),x(27),x(28),x(29),x(30),x(31)];
+% sweep = 24;
+% b = 28.08;
+% lambda_in = 0.6;
+% lambda_out = 0.4;
+% root = 5.8;
+% epsilon_in = 1;
+% epsilon_out = 1;
+% CST = [0.2337, 0.0796, 0.2683, 0.0887, 0.2789, 0.3811, -0.2254, -0.1634, -0.0470, -0.4771, 0.0735, 0.3255, 0.1385, 0.0472, 0.1590, 0.0526, 0.1653, 0.2258, -0.1336, -0.0968, -0.0279, -0.2827, 0.0435, 0.1929];
+% X0 = [sweep, b, lambda_in, lambda_out, root, epsilon_in, epsilon_out, CST];
+% x0  = X0./abs(X0); 
+% 
+% %%only for plot
+% Au_root = [X0(8),X0(9),X0(10),X0(11),X0(12),X0(13)];
+% Al_root = [X0(14),X0(15),X0(16),X0(17),X0(18),X0(19)];
+% 
+% Au_tip = [X0(20),X0(21),X0(22),X0(23),X0(24),X0(25)];
+% Al_tip = [X0(26),X0(27),X0(28),X0(29),X0(30),X0(31)];
+    sweep = x(1);
+    b = x(2);
+    lambda_in = x(3);
+    lambda_out = x(4);
+    root = x(5);
+    epsilon_in = x(6);
+    epsilon_out = x(7);
+    
+    CST = [x(8),x(9),x(10),x(11),x(12),x(13),x(14),x(15),...
+        x(16),x(17),x(18),x(19),x(20),x(21),x(22),x(23),x(24),x(25),...
+        x(26),x(27),x(28),x(29),x(30),x(31)];
+    Au_root = [x(8),x(9),x(10),x(11),x(12),x(13)];
+    Al_root = [x(14),x(15),x(16),x(17),x(18),x(19)];
+    
+    Au_tip = [x(20),x(21),x(22),x(23),x(24),x(25)];
+    Al_tip = [x(26),x(27),x(28),x(29),x(30),x(31)];
 
 
     
