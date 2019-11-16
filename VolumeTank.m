@@ -2,7 +2,7 @@ function[V_tank_tot] = VolumeTank(x)
 %This function calculates the volume available for the fuel in the wing. It
 %bases the calculation on volume integrals over the surface area of the
 %airfoil available for the tank.
-       sweep = x(1);
+    sweep = x(1);
     b = x(2);
     lambda_in = x(3);
     lambda_out = x(4);
@@ -19,11 +19,13 @@ function[V_tank_tot] = VolumeTank(x)
     Au_tip = [x(20),x(21),x(22),x(23),x(24),x(25)];
     Al_tip = [x(26),x(27),x(28),x(29),x(30),x(31)];
     
-    [Xtu_root,Xtl_root] = D_airfoil2(Au_root,Al_root);
-    [Xtu_tip,Xtl_tip] = D_airfoil2(Au_tip,Al_tip);
+    [Xtu_root_ini,Xtl_root_ini] = D_airfoil2(Au_root,Al_root);
+    %[Xtu_tip,Xtl_tip] = D_airfoil2(Au_tip,Al_tip);
     
-    Xtu_root = Xtu_root.*root;
-    Xtl_root = Xtl_root.*root;
+    Xtu_root = Xtu_root_ini.*root;
+    Xtl_root = Xtl_root_ini.*root;
+    Xtl_root = flip(Xtl_root);
+    Xtl_root = [Xtl_root(:,1),Xtl_root(:,2)*(-1)];
     
     %Set parameters of tank position (chordwise)
     tank_chord_front = 0.15;
@@ -45,8 +47,8 @@ function[V_tank_tot] = VolumeTank(x)
     spar_back_upp_height = interp1(Xtu_root(:,1),Xtu_root(:,2),tank_chord_back*root);
     spar_front_low_height = interp1(Xtl_root(:,1),Xtl_root(:,2),tank_chord_front*root);
     spar_back_low_height = interp1(Xtl_root(:,1),Xtl_root(:,2),tank_chord_back*root);
-    spar_front_height = (spar_front_upp_height - spar_front_low_height)*root;
-    spar_back_height = (spar_back_upp_height - spar_back_low_height)*root;
+    spar_front_height = (spar_front_upp_height - spar_front_low_height);
+    spar_back_height = (spar_back_upp_height - spar_back_low_height);
     
     %integration over wing of inner tank
     n = 1; %For each span position
