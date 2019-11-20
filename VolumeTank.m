@@ -3,23 +3,7 @@ function[V_tank_tot] = VolumeTank(x)
 %bases the calculation on volume integrals over the surface area of the
 %airfoil available for the tank.
     
-% sweep = 24;
-% b = 28.08;
-% lambda_in = 0.6;
-% lambda_out = 0.4;
-% root = 5.8;
-% epsilon_in = 1;
-% epsilon_out = 1;
-% CST = [0.2337, 0.0796, 0.2683, 0.0887, 0.2789, 0.3811, -0.2254, -0.1634, -0.0470, -0.4771, 0.0735, 0.3255, 0.1385, 0.0472, 0.1590, 0.0526, 0.1653, 0.2258, -0.1336, -0.0968, -0.0279, -0.2827, 0.0435, 0.1929];
-% X0 = [sweep, b, lambda_in, lambda_out, root, epsilon_in, epsilon_out, CST];
-% x0  = X0./abs(X0); 
-% 
-% %%only for plot
-% Au_root = [X0(8),X0(9),X0(10),X0(11),X0(12),X0(13)];
-% Al_root = [X0(14),X0(15),X0(16),X0(17),X0(18),X0(19)];
-% 
-% Au_tip = [X0(20),X0(21),X0(22),X0(23),X0(24),X0(25)];
-% Al_tip = [X0(26),X0(27),X0(28),X0(29),X0(30),X0(31)];
+
     sweep = x(1);
     b = x(2);
     lambda_in = x(3);
@@ -47,7 +31,7 @@ function[V_tank_tot] = VolumeTank(x)
     
     %Set parameters of tank position (chordwise)
     tank_chord_front = 0.15;
-    tank_chord_back = 0.60;
+    tank_chord_back = 0.6;
     tank_length_ratio = tank_chord_back - tank_chord_front ;
     step_size = 0.01;
     
@@ -80,25 +64,25 @@ function[V_tank_tot] = VolumeTank(x)
             delta_chord_in = ((root*lambda_in)-(root))/(b*tank_loc_in);
             chord_sec(n) = root + delta_chord_in*b_sec;
             %Per airfoil section calculate the length of the chord for the tank
-            l_tank = chord_sec(n)*tank_length_ratio;
+            l_tank(n) = chord_sec(n)*tank_length_ratio;
             %Per airfoil section calculate the height of the tank
             delta_height = (1+slope_tc*(b_sec/b));
             height_front_sec(n) = spar_front_height*delta_height;
             height_back_sec(n) = spar_back_height*delta_height;
             %Calculate the area of the airfoil
-            area_tank_sec(n) = l_tank*((height_front_sec(n) + height_back_sec(n))/2);
+            area_tank_sec(n) = l_tank(n)*((height_front_sec(n) + height_back_sec(n))/2);
         else
             %Per airfoil section calculate the chord
             delta_chord_out = ((root*lambda_in*lambda_out)-(root*lambda_in))/(b*(tank_loc_out-tank_loc_in));
             chord_sec(n) = root*lambda_in + delta_chord_out*(b_sec-5.37);
             %Per airfoil section calculate the length of the chord for the tank
-            l_tank = chord_sec(n)*tank_length_ratio;
+            l_tank(n) = chord_sec(n)*tank_length_ratio;
             %Per airfoil section calculate the height of the tank
             delta_height = (1+slope_tc*(b_sec/b));
             height_front_sec(n) = spar_front_height*delta_height;
             height_back_sec(n) = spar_back_height*delta_height;
             %Calculate the area of the airfoil
-            area_tank_sec(n) = l_tank*((height_front_sec(n) + height_back_sec(n))/2);
+            area_tank_sec(n) = l_tank(n)*((height_front_sec(n) + height_back_sec(n))/2);
             
         end
         %Calculate the Volume of the tank

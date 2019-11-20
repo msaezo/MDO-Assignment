@@ -18,7 +18,7 @@ X0 = couplings.X0;
 W_fuel = couplings.W_fuel;
 W_wing = couplings.W_wing;
 
-x = x.*X0;
+x = x.*abs(X0);
 sweep = x(1);
 b = x(2);
 lambda_in = x(3);
@@ -26,6 +26,11 @@ lambda_out = x(4);
 root = x(5);
 epsilon_in = x(6);
 epsilon_out = x(7);
+CST = [x(8),x(9),x(10),x(11),x(12),x(13),x(14),x(15),...
+        x(16),x(17),x(18),x(19),x(20),x(21),x(22),x(23),x(24),x(25),...
+        x(26),x(27),x(28),x(29),x(30),x(31)];
+Au_root = [x(8),x(9),x(10),x(11),x(12),x(13)];
+Al_root = [x(14),x(15),x(16),x(17),x(18),x(19)];
     
 chord_kink = root*lambda_in;
 tip = chord_kink*lambda_out;
